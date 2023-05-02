@@ -1,0 +1,63 @@
+>>> # See example 3.2.2.1. for an explanation of how it works and to see an image of the graph used
+>>> # Let the adjacency matrix here be A
+>>> A = [[ 0, 1, 1, 0],
+...      [ 1, 0, 1, 1],
+...      [ 1, 1, 0, 1],
+...      [ 0, 1, 1, 0]]
+>>> print(A)
+[[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [0, 1, 1, 0]]
+>>> 
+>>> # Initialize the vertices in the graph, as numbers through the range of the adjacency matrix A
+>>> vertex = "0123"
+>>> a={}
+>>> for i in range(len(A)):
+...     a[vertex[i]] = i
+... 
+...     
+>>> # Add up the degrees of vertices, so they can eventually be organised from largest to smallest
+>>> d = []
+>>> for i in range(len(A)):
+...     d.append(sum(A[i]))
+... 
+...     
+>>> # Define the pobbible colour that can be given to vertices 0123
+>>> colour ={}
+>>> for i in range(len(A)):
+...     colour[vertex[i]]=["Yellow","Green","Blue","Red"]
+... 
+...     
+>>> # Select the colour candidate using the selection colour function such the degrees of vertices is from largest to smallest
+>>> sortedvertices=[]
+>>> selection=[]
+>>> for i in range(len(d)):
+...     max_=0
+    j=0
+    for j in range(len(d)):
+        if j not in selection:
+            if d[j]>max_:
+                max_ = d[j]
+                g = j
+    selection.append(g)
+    sortedvertices.append(vertex[g])
+
+    
+# Look in the sortedvertices and set the colour with possible colours given in colour and then save the answer to solution. The colour used is then removed from colour as it has already been used
+solution={}
+for n in sortedvertices:
+    colourset = colour[n]
+    solution[n] = colourset[0]
+    adjacentvertex = A[a[n]]
+    for j in range(len(adjacentvertex)):
+        if adjacentvertex[j]==1 and (colourset[0] in colour[vertex[j]]):
+            colour[vertex[j]].remove(colourset[0])
+
+            
+# Print the answer to the solution in the sorted order of the vertices "0123"
+for a,b in sorted(solution.items()):
+    print("vertex",a,"=",b)
+
+    
+vertex 0 = Blue
+vertex 1 = Yellow
+vertex 2 = Green
+vertex 3 = Blue
